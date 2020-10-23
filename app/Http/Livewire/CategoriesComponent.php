@@ -26,23 +26,28 @@ class CategoriesComponent extends Component
         ]);
     }
 
+    public function resetInputs()
+    {
+        $this->name = "";
+    }
+
     public function store()
     {
         //VALIDAMOS QUE LOS CAMPOS DEL FORMULARIO NO LLEGUEN VACIOS
         $this->validate([
-            'name'          => 'required',
-            'description'   => 'required',
-            'id_categories' => 'required',
+            'name'          => 'required'
         ]);
 
         //CREAMOS UN NUEVO REGISTRO CON LOS CAMPOS VALIDADOS
         $category = Categories::create([
             'name'          => $this->name,
         ]);
-        $this->edit($category->id);
+        $this->resetInputs();
 
         //DESPUES DE CREADO MANDAMOS UN MENSAJE DE CONFIRMACION
         session()->flash('mensaje', 'CATEGORIA REGISTRADA CON EXITO');
+
+        $this->emit('store');
     }
 
     public function edit($id)
@@ -67,8 +72,9 @@ class CategoriesComponent extends Component
         ]);
 
         $this->default();
-
         session()->flash('mensaje', 'CATEGORIA ACTUALIZADA CON EXITO');
+
+        $this->emit('store');
     }
 
     public function destroy($id)

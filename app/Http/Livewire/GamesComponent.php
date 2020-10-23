@@ -23,7 +23,6 @@ class GamesComponent extends Component
         return view('livewire.games-component',[
             'games' => Games::select('games.*', 'categories.name as nameC')
             ->where('games.name', 'LIKE', "%{$this->searh}%")
-            ->orWhere('games.description', 'LIKE', "%{$this->searh}%")
             ->join('categories', 'games.id_categories', '=', 'categories.id')
             ->orderBy('id')
             ->paginate(5),
@@ -52,6 +51,8 @@ class GamesComponent extends Component
 
         //DESPUES DE CREADO MANDAMOS UN MENSAJE DE CONFIRMACION
         session()->flash('mensaje', 'JUEGO REGISTRADO CON EXITO');
+
+        $this->emit('store');
     }
 
     public function edit($id)
@@ -84,6 +85,8 @@ class GamesComponent extends Component
         $this->default();
 
         session()->flash('mensaje', 'JUEGO ACTUALIZADO CON EXITO');
+
+        $this->emit('store');
     }
 
     public function destroy($id)

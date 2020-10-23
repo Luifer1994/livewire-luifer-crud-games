@@ -1,8 +1,23 @@
+{{-- MODAL REGISTER --}}
+@include('livewire.games.register')
+
 <div class="table-responsive p-3">
-    <div class="border p-2">
+    @if (session()->has('mensaje'))
+        <div class="alert alert-success">
+            {{ session('mensaje') }}
+        </div>
+    @endif
+
+    <div class="text-right">
+        <!-- Button trigger modal register-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addGame">
+            Nuevo Juego
+        </button>
+    </div>
+<div class="table-responsive p-3">
+    <div class="p-2">
         <input wire:model='searh' class="form-control" placeholder="BUSCAR">
     </div>
-    <hr>
     @if ($games->count())
     <table class="table table-striped">
         <thead>
@@ -24,12 +39,14 @@
                 <td  style="width: 25px">
                     <div class="row">
                         <div class="col-6">
-                            <button wire:click='edit({{ $game->id }})' type="button" class="btn btn-success">
+                            <button wire:click='edit({{ $game->id }})' data-toggle="modal" data-target="#editGame" type="button" class="btn btn-success">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
+
+                            @include('livewire.games.edit')
                         </div>
                         <div class="col-6">
-                            <button wire:click='destroy({{ $game->id }})' type="button" class="btn btn-danger">
+                            <button onclick="alert('Estas seguro que deseas eliminar el juego {{ $game->name }}')" wire:click='destroy({{ $game->id }})' type="button" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>

@@ -1,21 +1,21 @@
-@if (session()->has('mensaje'))
-<div class="alert alert-success text-center" role="alert">
-    {{ session('mensaje') }}
-</div>
-@endif
-<div class="p-2">
-    <div class="text-center">
-        <h1>ACTUALIZAR JUEGO</h1>
+<!-- Modal -->
+<div wire:ignore.self class="modal fade" id="editGame" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">ACTUALIZAR CATEGORIA</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        @include("livewire.games.formulario")
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button wire:click='default' type="button" class="btn btn-danger" data-dismiss="modal">CANCELAR</button>
+                <button wire:click='update' type="button" class="btn btn-primary">ACTUALIZAR</button>
+            </div>
+        </div>
     </div>
-    @include("livewire.games.formulario")
-    <div class="text-center">
-        <button wire:click='update'  class="btn btn-primary">
-            ACTUALIZAR
-        </button>
-        <button wire:click='default' class="btn btn-danger">
-            CANCELAR
-        </button>
-    </div>
 </div>
-
-

@@ -1,5 +1,20 @@
+{{-- MODAL REGISTER --}}
+@include('livewire.categories.register')
+
 <div class="table-responsive p-3">
-    <div class="border p-2">
+    @if (session()->has('mensaje'))
+        <div class="alert alert-success">
+            {{ session('mensaje') }}
+        </div>
+    @endif
+
+    <div class="text-right">
+        <!-- Button trigger modal register-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCategory">
+            Nueva Categoria
+        </button>
+    </div>
+    <div class="p-2">
         <input wire:model='searh' class="form-control" placeholder="BUSCAR">
     </div>
     <hr>
@@ -20,12 +35,14 @@
                 <td  style="width: 25px">
                     <div class="row">
                         <div class="col-6">
-                            <button wire:click='edit({{ $category->id }})' type="button" class="btn btn-success">
+                            <button wire:click='edit({{ $category->id }})' data-toggle="modal" data-target="#editCategory" type="button" class="btn btn-success">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
+                          {{-- MODAL EDITAR   --}}
+                        @include('livewire.categories.edit')        
                         </div>
                         <div class="col-6">
-                            <button wire:click='destroy({{ $category->id }})' type="button" class="btn btn-danger">
+                            <button onclick="alert('Estas seguro que deseas eliminar la categoria {{ $category->name }}')" wire:click='destroy({{ $category->id }})'type="button" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -40,6 +57,6 @@
         <p class="text-black-50">NO HAY RESULTADOS PARA LA BUSQUEDA {{ $searh }}</p>
   </div>
     @endif
-    
     {{ $categories->links() }}
 </div>
+
